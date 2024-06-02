@@ -1,0 +1,19 @@
+<!-- navigation.ejs
+    Copyright © 2024 NextStep IT Training. All rights reerved.
+
+-->
+
+<div class="navigation">
+    <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
+        <img class="avatar" src="<%= avatar ?? '/images/gravatar.jpg' %>" /><br><br>
+    <% } %>
+    <a href="/index" class="navigation">Pyrates</a><br>
+    <% if (typeof isAuthenticated !== 'undefined' && isAuthenticated) { %>
+        <a href="/logout" class="navigation">Sign Out</a><br>
+    <% } else { %>
+        <a href="/login" class="navigation">Sign-On</a><br>
+        <a href="/signon" class="navigation">Sign Up</a><br>
+    <% } %>
+    <a href="/profile" class="navigation">Profile</a><br>
+    <a href="/treasure" class="navigation">Treasure</a><br>
+</div>
