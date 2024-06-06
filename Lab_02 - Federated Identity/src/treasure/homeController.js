@@ -12,7 +12,7 @@ import path from 'path'
 
 let appServer = null
 
-const homeController = (issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, treasureUrl) => {
+const homeController = (issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, pyratesUrl) => {
 
     const app = express()
     const iconPath = path.join(import.meta.dirname, 'assets/images/favicon.ico')
@@ -52,6 +52,9 @@ const homeController = (issuerBaseUrl, clientId, clientSecret, secret, applicati
         clientSecret: clientSecret,
         idpLogout: true,
         issuerBaseURL: issuerBaseUrl,
+        routes: {
+            postLogoutRedirect: pyratesUrl
+        },
         secret: secret
     })
 
@@ -70,26 +73,27 @@ const homeController = (issuerBaseUrl, clientId, clientSecret, secret, applicati
 
     // Public landing page.
 
-    app.get([ '/', '/index', '/index.html' ], requiresAuth(() => false), cache.disable(), (request, response, next) => {
-        
-        response.render('pages/index', { isAuthenticated: request.oidc.isAuthenticated(), avatar: request.oidc.user?.picture })
-    })
+    app.get([ '/', '/index', '/index.html' ], requiresAuth(), cache.disable(), (request, response, next) => {
 
+        const treasure = [
+
+            { _id: 'acdcd7f6-10f1-4030-a5f8-73da8000bceb', date: '1695', amount: 600000, prize: 'Ganj-i-Sawai', ship: 'Fancy', captain: 'Long Ben' },
+            { _id: '35059dc7-5d89-44b5-b191-6e31820ac6e3', date: '1693', amount: 180000, prize: 'Unknown dhow', ship: 'Amity', captain: 'The Rhode Island Pirate' },
+            { _id: '63baab34-263f-4424-bec2-6ead385e69f9', date: '1723', amount: 15000, prize: 'Nostra Signiora de Victoria', ship: 'Squirrel', captain: 'Ned Low' },
+            { _id: '0bc78240-5110-4191-8448-bf1769da191b', date: '1721', amount: 2700, prize: 'Unknown slaver', ship: 'Unknown brigatine', captain: 'Charles Vane' },
+            { _id: '09dc6d7b-fad2-449d-9130-384477138753', date: '1723', amount: 150, prize: 'Fortune', ship: 'Fancy', captain: 'Ned Low' },
+        ];
+
+        response.render('pages/index', { isAuthenticated: request.oidc.isAuthenticated(), avatar: request.oidc.user?.picture, returnTo: pyratesUrl, treasure: treasure })
+    })
 
     // /logout is registered and handled by the express-openid-connect middleware.
 
-    // The profile page is built into the portal.
-
-    app.get('/profile', requiresAuth(), cache.disable(), (request, response, next) => {
-
-        response.render('pages/profile', { isAuthenticated: request.oidc.isAuthenticated(), avatar: request.oidc.user?.picture, idToken: request.oidc.idToken, rawClaims: JSON.stringify(request.oidc.user, null, 4) })
-    })
-
     // Treasure (separate application, currently not implemented).
 
-    app.get('/treasure', requiresAuth(), cache.disable(), (request, response, next) => {
+    app.get('/pyrates', cache.disable(), (request, response, next) => {
 
-        response.redirect(treasureUrl)
+        response.redirect(pyratesUrl)
     })
 
     appServer = app.listen(applicationPort)

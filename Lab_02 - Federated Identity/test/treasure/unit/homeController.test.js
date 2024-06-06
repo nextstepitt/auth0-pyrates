@@ -4,7 +4,7 @@
 
 import { afterEach, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import homeController, { shutdown } from '../../../src/pyrates/homeController'
+import homeController, { shutdown } from '../../../src/treasure/homeController'
 
 // Hoist the common definitions for mocking (this must be outside of any function).
 
@@ -71,7 +71,7 @@ describe('homeController', () => {
     const clientId = 'fake-client-id'
     const clientSecret = 'fake-client-secret'
     const secret = 'fake-secret'
-    const treasureUrl = `http://localhost:${applicationPort - 1}`
+    const pyratesUrl = `http://localhost:${applicationPort - 1}`
 
     let response;
     
@@ -91,28 +91,28 @@ describe('homeController', () => {
 
     it ('Creates the express application instance', async () => {
 
-        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, treasureUrl)
+        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, pyratesUrl)
 
         expect(mocks.expressMock.default).toBeCalled()
     })
 
     it('Configures EJS as the view engine', async () => {
 
-        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, treasureUrl)
+        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, pyratesUrl)
 
         expect(mocks.appMock.set).toHaveBeenCalledWith('view engine', 'ejs')
     })
 
     it('Added the express-openid-connect OIDC middleware', async () => {
 
-        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, treasureUrl)
+        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, pyratesUrl)
 
         expect(mocks.appMock.use).toHaveBeenCalledWith(mocks.expectedAuthMockValue)
     })
 
     it('Uses the injected values for the auth configuration', async () => {
 
-        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, treasureUrl)
+        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, pyratesUrl)
 
         expect.objectContaining({
             baseURL: baseUrl,
@@ -125,7 +125,7 @@ describe('homeController', () => {
 
     it('Does not require authentication for all paths in the auth configuration', async () => {
 
-        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, treasureUrl)
+        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, pyratesUrl)
 
         expect.objectContaining({
             idpLogout: true
@@ -134,7 +134,7 @@ describe('homeController', () => {
 
     it('Requests authorization-code flow and all possible user data in the auth configuration', async () => {
 
-        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, treasureUrl)
+        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, pyratesUrl)
 
         expect.objectContaining({
             authorizationParams: {
@@ -146,7 +146,7 @@ describe('homeController', () => {
 
     it('Allows IdP logout in the auth configuration', async () => {
 
-        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, treasureUrl)
+        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, pyratesUrl)
 
         expect.objectContaining({
             authRequired: false
@@ -155,7 +155,7 @@ describe('homeController', () => {
 
     it('Configures the static source as \'./assets\'', async () => {
 
-        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, treasureUrl)
+        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, pyratesUrl)
 
         expect(mocks.expressMock.default.static).toHaveBeenCalledWith('./assets')
         expect(mocks.appMock.use).toHaveBeenCalledWith('/assets', mocks.expectedStaticMockValue)
@@ -163,40 +163,26 @@ describe('homeController', () => {
 
     it('Configures a nocache, public path to favicon.ico', async () => {
 
-        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, treasureUrl)
+        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, pyratesUrl)
         
         expect(mocks.appMock.use).toHaveBeenCalledWith('/favicon.ico', mocks.expectedCacheDisableMockValue, expect.anything())
     })
 
     it('Listens on the application port', async () => {
 
-        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, treasureUrl)
+        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, pyratesUrl)
 
         expect(mocks.appMock.listen).toHaveBeenCalledWith(applicationPort)
     })
 
     it('Configures a nocache, public path to landing: [ /, /index, /index.html ]', async () => {
 
-        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, treasureUrl)
+        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, pyratesUrl)
 
         expect(mocks.appMock.get).toHaveBeenCalledWith([ '/', '/index', '/index.html' ], mocks.expectedRequiresAuthMockValue, mocks.expectedCacheDisableMockValue, expect.anything())
     })
 
     // /logout is registered and handled by express-openid-connect so there is nothing to test.
-
-    it('Configures a nocache, requiredAuth path to /profile', async () => {
-
-        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, treasureUrl)
-
-        expect(mocks.appMock.get).toHaveBeenCalledWith('/profile', mocks.expectedRequiresAuthMockValue, mocks.expectedCacheDisableMockValue, expect.anything())
-    })
-
-    it('Configures a nocache, requiredAuth path to /treasure', async () => {
-
-        homeController(issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, treasureUrl)
-
-        expect(mocks.appMock.get).toHaveBeenCalledWith('/treasure', mocks.expectedRequiresAuthMockValue, mocks.expectedCacheDisableMockValue, expect.anything())
-    })
 })
 
 export default {}

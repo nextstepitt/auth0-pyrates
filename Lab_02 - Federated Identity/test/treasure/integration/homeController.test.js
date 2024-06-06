@@ -5,7 +5,7 @@
 import { config as dotenvConfig } from 'dotenv'
 import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import { launch as appLaunch, shutdown as appShutdown } from '../../../src/pyrates/app'
+import { launch as appLaunch, shutdown as appShutdown } from '../../../src/treasure/app'
 
 // Hoist the common definitions for mocking (this must be outside of any function).
 
@@ -48,7 +48,7 @@ describe('homeController', () => {
     let applicationPort
     let issuerBaseUrl
     let baseUrl
-    let treasureUrl
+    let pyratesUrl
 
     afterAll(() => {
 
@@ -57,7 +57,7 @@ describe('homeController', () => {
 
     beforeAll(async () => {
 
-        process.chdir('./src/pyrates')                  // .env is in the pyrates folder; pool is set to 'forks' in vitest.config.js to allow this.
+        process.chdir('./src/treasure')                 // .env is in the treasure folder; pool is set to 'forks' in vitest.config.js to allow this.
         delete(process.env.BASE_URL)                    // vitest sets BASE_URL (undocumented) so removing to the the .env setting is the easiest solution.
         dotenvConfig()
     
@@ -70,7 +70,7 @@ describe('homeController', () => {
             baseUrl = baseUrl.substring(0, baseUrl.length - 1)
         }
 
-        treasureUrl = process.env.TREASURE_URL
+        pyratesUrl = process.env.PYRATES_URL
 
         // Remove (mock away) express-openid-connect to test the endpoint responses.
 
@@ -97,7 +97,7 @@ describe('homeController', () => {
         mocks.requiresAuthMockToggle.value = false
     })
 
-    it('Retrieves the favicon.ico file, nocache (requiresAuth not active', async () => {
+    it('Retrieves the favicon.ico file, nocache (requiresAuth not active)', async () => {
 
         mocks.requiresAuthMockToggle.value = true
 
@@ -144,7 +144,16 @@ describe('homeController', () => {
         expect(response.headers.get('cache-control')).toContain('no-cache')
     })
 
-    it('Retrieves the landing page and passes the user avatar picture (authentication bypassed)', async () => {
+    it('Handles authentication failure (requiresAuth active)', async () => {
+
+        mocks.requiresAuthMockToggle.value = true
+
+        const response = await fetch(`http://localhost:${applicationPort}`, { redirect: 'manual' })
+
+        expect(response.status).toEqual(400)
+    })
+
+    it('Retrieves the landing page and passes the user avatar picture', async () => {
 
         mocks.requestOidcUserMock.value = true
 
@@ -162,53 +171,17 @@ describe('homeController', () => {
         expect(response.status).toEqual(404)
     })
 
-    it('Retrieves the profile page with no authentication fails', async () => {
+    // /logout is registered and handled by the express-openid-connect middleware so there is nothing to test.
+
+    it('Redirects to the pyrates app (requiresAuth not active)', async () => {
 
         mocks.requiresAuthMockToggle.value = true
 
-        const response = await fetch(`http://localhost:${applicationPort}/profile`, { redirect: 'manual' })
-
-        expect(response.status).toEqual(400)
-    })
-
-    it('Retrieves the profile page (authentication bypassed)', async () => {
-
-        const response = await fetch(`http://localhost:${applicationPort}/profile`)
-
-        expect(response.status).toEqual(200)
-        expect(response.headers.get('content-type')).toContain('text/html')
-        expect(response.headers.get('cache-control')).toContain('no-cache')
-    })
-
-    it('Retrieves the profile page and passes the user avatar picture (authentication bypassed)', async () => {
-
-        mocks.requestOidcUserMock.value = true
-
-        const response = await fetch(`${baseUrl}/profile`)
-
-        expect(response.status).toEqual(200)
-        expect(response.headers.get('content-type')).toContain('text/html')
-        expect(response.headers.get('cache-control')).toContain('no-cache')
-    })
-
-    it('Redirects to the treasure app with no authentication fails', async () => {
-
-        mocks.requiresAuthMockToggle.value = true
-
-        const response = await fetch(`http://localhost:${applicationPort}/treasure`, { redirect: 'manual' })
-
-        expect(response.status).toEqual(400)
-    })
-
-    it('Redirects to the treasure app (authentication bypassed)', async () => {
-
-        const response = await fetch(`http://localhost:${applicationPort}/treasure`, { redirect: 'manual' })
+        const response = await fetch(`http://localhost:${applicationPort}/pyrates`, { redirect: 'manual' })
 
         expect(response.status).toEqual(302)
-        expect(response.headers.get('location')).toEqual(treasureUrl)
+        expect(response.headers.get('location')).toEqual(pyratesUrl)
     })
-
-    // /logout is registered and handled by the express-openid-connect middleware so there is nothing to test.
 })
 
 export default {}

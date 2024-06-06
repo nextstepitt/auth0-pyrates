@@ -1,5 +1,5 @@
 // homeControllerTest.js
-// Copyright © 2024 NextStep IT Training. All rights reserved.
+// Copyright © 2024 Joel A Mussman and NextStep IT Training powered by Smallrock. All rights reserved.
 //
 
 import puppeteer from 'puppeteer'
@@ -70,7 +70,7 @@ describe('homeController', () => {
         page = await browser.newPage()
     })
 
-    it('Retrieves the landing page, unauthenticated', async () => {
+    it('Retrieves the landing page (authentication disabled)', async () => {
 
         await page.goto(baseUrl)
 
@@ -84,7 +84,7 @@ describe('homeController', () => {
 
         await page.goto(baseUrl)
 
-        const signOn = await page.$("a[href$='/signon']")
+        const signOn = await page.$('a[href="/signon"]')
 
         expect(signOn).not.toBeNull()
     })
@@ -93,7 +93,7 @@ describe('homeController', () => {
 
         await page.goto(baseUrl)
 
-        const signOn = await page.$("a[href$='/logout']")
+        const signOn = await page.$('a[href="/logout"]')
 
         expect(signOn).toBeNull()
     })
@@ -102,7 +102,7 @@ describe('homeController', () => {
 
         await page.goto(baseUrl)
 
-        const signOn = await page.$("img[class='avatar']")
+        const signOn = await page.$('img[class=avatar]')
 
         expect(signOn).toBeNull()
     })
@@ -113,7 +113,7 @@ describe('homeController', () => {
 
         await page.goto(baseUrl)
 
-        const signOn = await page.$("a[href$='/signon']")
+        const signOn = await page.$('a[href="/signon"]')
 
         expect(signOn).toBeNull()
     })
@@ -124,7 +124,7 @@ describe('homeController', () => {
 
         await page.goto(baseUrl)
 
-        const signOn = await page.$("a[href$='/logout']")
+        const signOn = await page.$('a[href="/logout"]')
 
         expect(signOn).not.toBeNull()
     })
@@ -135,7 +135,7 @@ describe('homeController', () => {
 
         await page.goto(baseUrl)
 
-        const signOn = await page.$("img[class='avatar']")
+        const signOn = await page.$('img[class=avatar]')
 
         expect(signOn).not.toBeNull()
     })
@@ -154,7 +154,7 @@ describe('homeController', () => {
 
         await page.goto(`${baseUrl}/profile`)
 
-        const signOn = await page.$("a[href$='/signon']")
+        const signOn = await page.$('a[href="/signon"]')
 
         expect(signOn).not.toBeNull()
     })
@@ -163,7 +163,7 @@ describe('homeController', () => {
 
         await page.goto(`${baseUrl}/profile`)
 
-        const signOn = await page.$("a[href$='/logout']")
+        const signOn = await page.$('a[href="/logout"]')
 
         expect(signOn).toBeNull()
     })
@@ -172,7 +172,7 @@ describe('homeController', () => {
 
         await page.goto(`${baseUrl}/profile`)
 
-        const signOn = await page.$("img[class='avatar']")
+        const signOn = await page.$('img[class=avatar]')
 
         expect(signOn).toBeNull()
     })
@@ -183,7 +183,7 @@ describe('homeController', () => {
 
         await page.goto(`${baseUrl}/profile`)
 
-        const signOn = await page.$("a[href$='/signon']")
+        const signOn = await page.$('a[href="/signon"]')
 
         expect(signOn).toBeNull()
     })
@@ -194,7 +194,7 @@ describe('homeController', () => {
 
         await page.goto(`${baseUrl}/profile`)
 
-        const signOn = await page.$("a[href$='/logout']")
+        const signOn = await page.$('a[href="/logout"]')
 
         expect(signOn).not.toBeNull()
     })
@@ -205,7 +205,7 @@ describe('homeController', () => {
 
         await page.goto(`${baseUrl}/profile`)
 
-        const signOn = await page.$("img[class='avatar']")
+        const signOn = await page.$('img[class=avatar]')
 
         expect(signOn).not.toBeNull()
     })

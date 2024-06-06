@@ -13,6 +13,16 @@
             ],
             "program": "app.js",
             "cwd": "${workspaceFolder}/src/pyrates"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Treasure",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "app.js",
+            "cwd": "${workspaceFolder}/src/treasure"
         }
     ]
 }

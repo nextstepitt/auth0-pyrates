@@ -1,5 +1,5 @@
 // app.test.js
-// Copyright © 2024 NexxtStep IT Training. All rights reserved.
+// Copyright © 2024 Joel A Mussman and NextStep IT Training powered by Smallrock. All rights reserved.
 //
 
 import { beforeAll, describe, expect, it, vi } from 'vitest'

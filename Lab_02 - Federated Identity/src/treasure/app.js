@@ -12,7 +12,7 @@ const launch = () => {
     // Inject the base, client id, client secret, and applicaiton port into the controller.
 
     dotenvConfig()
-    homeController(process.env.ISSUER_BASE_URL, process.env.CLIENT_ID, process.env.CLIENT_SECRET, process.env.SECRET, process.env.APPLICATION_PORT, process.env.BASE_URL, process.env.TREASURE_URL)
+    homeController(process.env.ISSUER_BASE_URL, process.env.CLIENT_ID, process.env.CLIENT_SECRET, process.env.SECRET, process.env.APPLICATION_PORT, process.env.BASE_URL, process.env.PYRATES_URL)
 }
 
 const shutdown = () => {

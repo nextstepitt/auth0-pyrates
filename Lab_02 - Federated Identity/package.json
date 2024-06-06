@@ -7,19 +7,28 @@
         "ejs": "^3.1.10",
         "express": "^4.19.2",
         "express-cache-ctrl": "^1.1.0",
-        "express-openid-connect": "^2.17.1"
+        "express-openid-connect": "^2.17.1",
+        "express-session": "^1.18.0",
+        "memorystore": "^1.6.7"
     },
     "devDependencies": {
         "@vitest/coverage-v8": "^1.6.0",
         "ejs-lint": "^2.0.0",
+        "ngrok": "^5.0.0-beta.2",
         "nodemon": "^3.1.1",
         "puppeteer": "^22.10.0",
         "vitest": "^1.6.0"
     },
     "scripts": {
+        "start-ngrok": "ngrok --config ngrok.yml start --all",
         "start-pyrates": "cd src/pyrates && nodemon app.js",
+        "start-treasure": "cd src/treasure && nodemon app.js",
         "test": "vitest run",
-        "test-coverage": "vitest run --coverage"
+        "test-coverage": "vitest run --coverage",
+        "test-pyrates": "vitest run --dir ./test/pyrates",
+        "test-pyrates-coverage": "vitest run --dir ./test/pyrates --coverage",
+        "test-treasure": "vitest run --dir ./test/treasure",
+        "test-treasure-coverage": "vitest run --dir ./test/treasure --coverage"
     },
     "type": "module"
 }
