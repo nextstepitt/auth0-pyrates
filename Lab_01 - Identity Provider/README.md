@@ -32,25 +32,25 @@ This hands-on lab depends on:
 The full instructions for this lab are provided in the course book.
 This is an overview of what is accomplished in the lab:
 
-### Step 1
-* If you have an existing administrator account at Auth0, and you have an existing development tenant to use or you can create a new tenant, then sign in
+#### 1.1
+1. If you have an existing administrator account at Auth0, and you have an existing development tenant to use or you can create a new tenant, then sign in
 to your account and use your tenant.
 If you do not have an account then register for a free new one at https://auth0.com, this includes a free developer tenant.
-* Configure a web application integration named *Pyrates* in your Auth0 tenant.
-* Complete the .env file in ./src/pyrates with the issuer (Auth0) base URL, client id, and client secret values from the integration.
+1. Configure a web application integration named *Pyrates* in your Auth0 tenant.
+1. Complete the .env file in ./src/pyrates with the issuer (Auth0) base URL, client id, and client secret values from the integration.
 The ISSUER_BASE_URL is built by prepending https:// to the *Domain* from the application integration.
-* In the Auth0 integration set the allowed callback and logout URLs to match the BASE_URL in the .env file: http://localhost:3000.
+1. In the Auth0 integration set the allowed callback and logout URLs to match the BASE_URL in the .env file: http://localhost:3000.
 
-### Step 2
-* Install the sdk with *npm install express-openid-connect*, or use *yarn* if you prefer.
-* After the import for *express-cache-ctrl*, import the auth and requiresAuth functions from the *express-openid-connect* NPM package.
+#### 1.2
+1. Install the sdk with *npm install express-openid-connect*, or use *yarn* if you prefer.
+1. After the import for *express-cache-ctrl*, import the auth and requiresAuth functions from the *express-openid-connect* NPM package.
 Because the distributed package is built using the CommonJS format, requiresAuth cannot be imported directly.
 Import the export object and split it:
     ```js
     import expressOpenIdConnect from 'express-openid-connect'
     const { auth, requiresAuth } = expressOpenIdConnect
     ```
-* After the comment about the express-openid-connect SDK authentiation middleware configuration,
+1. After the comment about the express-openid-connect SDK authentiation middleware configuration,
 establish a *config* variable using the auth function with the following options:
     ```js
     const authMiddleware = auth({
@@ -68,30 +68,30 @@ establish a *config* variable using the auth function with the following options
         secret: secret
     })
     ```
-* Following the configuration add the config as middleware to Express:
+1. Following the configuration add the config as middleware to Express:
     ```js
     app.use(authMiddleware)
     ```
 
-### Step 3
-* Add the *requiresAuth(() = false)* as the first middleware to the route for [ /, /index, /index.html ].
+#### 1.3
+1. Add the *requiresAuth(() = false)* as the first middleware to the route for [ /, /index, /index.html ].
 This middlware uses a callback function to indicate (false) that authentication must take place.
 This steps outside of the bounds of unit testing, because this is inserted just so the middleware may
 be mocked for this route during the test.
 This is the only place in the application that anything is added to support testing, everything
 else follows the principles of test in isolation and do not write code specificially to enable testing.
-* Add *requiresAuth()* as the first middleware in each of the routes for /profile and /treasure.
+1. Add *requiresAuth()* as the first middleware in each of the routes for /profile and /treasure.
 Without a parameter the default is *true*, authentication is required for the route.
 
-### Step 4
-* Run all of the tests with *npm test*, or *npm run test-coverage* to check the code coverage during testing.
+#### 1.4
+1. Run all of the tests with *npm test*, or *npm run test-coverage* to check the code coverage during testing.
 
-### Step 5
-* Launch the web application server with *npm run start-pyrates*.
-* Open the browser and go to http://localhost:3000, verify the landing page is accessible.
-* Click on the Profile page. Auth0 will provide the login page. Click the sign-up button and create a new account and sign in.
-* Verify the profile page shows the ODIC ID token and the JSON claims that it contains.
-* Click *Sign Out* and verify you are signed out of the application.
+#### 1.5
+1. Launch the web application server with *npm run start-pyrates*.
+1. Open the browser and go to http://localhost:3000, verify the landing page is accessible.
+1. Click on the Profile page. Auth0 will provide the login page. Click the sign-up button and create a new account and sign in.
+1. Verify the profile page shows the ODIC ID token and the JSON claims that it contains.
+1. Click *Sign Out* and verify you are signed out of the application.
 
 ## License
 

@@ -6,7 +6,8 @@
         "dotenv": "^16.4.5",
         "ejs": "^3.1.10",
         "express": "^4.19.2",
-        "express-cache-ctrl": "^1.1.0"
+        "express-cache-ctrl": "^1.1.0",
+        "express-openid-connect": "^2.17.1"
     },
     "devDependencies": {
         "@vitest/coverage-v8": "^1.6.0",
@@ -17,8 +18,10 @@
     },
     "scripts": {
         "start-pyrates": "cd src/pyrates && nodemon app.js",
-        "test": "vitest run",
-        "test-coverage": "vitest run --coverage"
+        "test": "vitest run --no-file-parallelism",
+        "test-coverage": "vitest run  --no-file-parallelism --coverage",
+        "test-pyrates": "vitest run  --no-file-parallelism --dir ./test/pyrates",
+        "test-pyrates-coverage": "vitest run  --no-file-parallelism --dir ./test/pyrates --coverage"
     },
     "type": "module"
 }

@@ -1,5 +1,5 @@
 // homeController.test.js
-// Copyright © 2024 NextStep IT Training. All rights reserved.
+// Copyright © 2024 Joel A Mussman and NextStep IT Training powered by Smallrock. All rights reserved.
 //
 
 import { config as dotenvConfig } from 'dotenv'
@@ -70,8 +70,7 @@ describe('homeController', () => {
             baseUrl = baseUrl.substring(0, baseUrl.length - 1)
         }
 
-        const baseUrlEnd = baseUrl.lastIndexOf(':')
-        treasureUrl = `${baseUrl.substring(0, baseUrlEnd)}:${parseInt(applicationPort) + 1}/`
+        treasureUrl = process.env.TREASURE_URL
 
         // Remove (mock away) express-openid-connect to test the endpoint responses.
 
@@ -98,7 +97,9 @@ describe('homeController', () => {
         mocks.requiresAuthMockToggle.value = false
     })
 
-    it('Retrieves the favicon.ico file, nocache, without authentication', async () => {
+    it('Retrieves the favicon.ico file, nocache (requiresAuth not active', async () => {
+
+        mocks.requiresAuthMockToggle.value = true
 
         const response = await fetch(`${baseUrl}/favicon.ico`)
 
@@ -107,7 +108,7 @@ describe('homeController', () => {
         expect(response.headers.get('cache-control')).toContain('no-cache')
     })
 
-    it('Retrieves the landing page with no path, without authentication', async () => {
+    it('Retrieves the landing page with no path (authentication bypassed)', async () => {
 
         const response = await fetch(baseUrl)
 
@@ -116,7 +117,7 @@ describe('homeController', () => {
         expect(response.headers.get('cache-control')).toContain('no-cache')
     })
 
-    it('Retrieves the landing page at / without authentication', async () => {
+    it('Retrieves the landing page at / (authentication bypassed)', async () => {
 
         const response = await fetch(`${baseUrl}/`)
 
@@ -125,7 +126,7 @@ describe('homeController', () => {
         expect(response.headers.get('cache-control')).toContain('no-cache')
     })
 
-    it('Retrieves the landing page at /index without authentication', async () => {
+    it('Retrieves the landing page at /index (authentication bypassed)', async () => {
 
         const response = await fetch(`${baseUrl}/index`)
 
@@ -134,7 +135,7 @@ describe('homeController', () => {
         expect(response.headers.get('cache-control')).toContain('no-cache')
     })
 
-    it('Retrieves the landing page at /index.html without authentication', async () => {
+    it('Retrieves the landing page at /index.html (authentication bypassed)', async () => {
 
         const response = await fetch(`${baseUrl}/index.html`)
 
@@ -143,7 +144,7 @@ describe('homeController', () => {
         expect(response.headers.get('cache-control')).toContain('no-cache')
     })
 
-    it('Retrieves the landing page and passes the user avatar picture', async () => {
+    it('Retrieves the landing page and passes the user avatar picture (authentication bypassed)', async () => {
 
         mocks.requestOidcUserMock.value = true
 
@@ -154,7 +155,7 @@ describe('homeController', () => {
         expect(response.headers.get('cache-control')).toContain('no-cache')
     })
 
-    it('Rejects default.html as the landing page', async () => {
+    it('Rejects default.html as the landing page (authentication bypassed)', async () => {
 
         const response = await fetch(`${baseUrl}/default.html`)
 
@@ -170,7 +171,7 @@ describe('homeController', () => {
         expect(response.status).toEqual(400)
     })
 
-    it('Retrieves the profile page (authentication disabled)', async () => {
+    it('Retrieves the profile page (authentication bypassed)', async () => {
 
         const response = await fetch(`http://localhost:${applicationPort}/profile`)
 
@@ -179,7 +180,7 @@ describe('homeController', () => {
         expect(response.headers.get('cache-control')).toContain('no-cache')
     })
 
-    it('Retrieves the profile page and passes the user avatar picture', async () => {
+    it('Retrieves the profile page and passes the user avatar picture (authentication bypassed)', async () => {
 
         mocks.requestOidcUserMock.value = true
 
@@ -199,7 +200,7 @@ describe('homeController', () => {
         expect(response.status).toEqual(400)
     })
 
-    it('Redirects to the treasure app (authentication disabled)', async () => {
+    it('Redirects to the treasure app (authentication bypassed)', async () => {
 
         const response = await fetch(`http://localhost:${applicationPort}/treasure`, { redirect: 'manual' })
 
