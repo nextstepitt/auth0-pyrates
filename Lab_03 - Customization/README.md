@@ -1,7 +1,7 @@
 ![Banner Light](./.assets/nsbanner-light.png#gh-light-mode-only)
 ![banner Dark](./.assets/nsbanner-dark.png#gh-dark-mode-only)
 
-# Customer Identity with OAuth2 and OIDC<br>Lab 02 - Federated Identity
+# Customer Identity with OAuth2 and OIDC<br>Lab 03 - Customization
 
 ## Overview
 
@@ -31,10 +31,6 @@ This hands-on lab depends on:
 * Node.js >=v20.0.0
 * Web browser (the lab is tested with Chrome)
 
-Part two depends on:
-* A free (or paid) account at https://ngrok.com
-* A trial or enterprise Auth0 tenant with OIDC Back-Channel Logout available
-
 The full instructions for this lab are provided in the course book.
 This is an overview of what is accomplished in the lab:
 
@@ -42,130 +38,47 @@ This is an overview of what is accomplished in the lab:
 
 ### Prerequisites
 
-1. Completion of the Pyrates application integration in *Lab 01 - Identity Provider*.
+1. Completion of the Pyrates and Treasure application integrations in *Lab 02 - Federated Identity*.
 
-#### 1.1 - Configure and launch the Pyrates application
-1. Configure the ./src/pyrates/.env file: Use the information from the Pyrates application integration to set the
-ISSUER_BASE_URL, CLIENT_ID, and CLIENT_SECRET from the Pyrates application integration in your Auth0 tenant.
-Remember that the ISSUER_BASE_URL is created by prepending https:/ to the *Domain*.
-1. Open a new integrated terminal window in the project folder and launch the Pyrates application with *npm run start-pyrates*.
-Hint: right click on the Lab_02 folder and pick "Open in integrated terminal".
-1. Open a browser window to http://localhost:3000 and make sure the application runs as in Lab 01.
+#### 1.1 - The Logo
+1. The logo, the support email address and support URL are managed under the tenant settings.
+In your Auth0 tenant click on the Settings option at the bottom of the navigation menu and scroll to "Settings".
+1. Change the logo URL to this image hosted at GitHub: https://nextstepitt.github.io/auth0-pyrates/assets/images/jolly-roger.jpg. Save the changes.
 
-#### 1.2 - Configure the Treasure application
-1. Create a new web application integration for *Treasure*; use http://localhost:3001 for the application callback URL.
-1. Configure the ./src/treasure/.env file with the information from the new integration.
-1. Test the two applications; use *npm run test-pyrates* or *npm run test-pyrates-coverage* and *npm run test-treasure* or *npm run test-treasure-coverage* to test the applications separately.
-Use *npm test* or *npm run test-coverage* to test both applications.
+#### 1.2 - Explore customization
+1. Move to the Branding option in the navigation menu: here are the options to configure SMS and email services, and configure the sms and email message templates.
+1. A custom domain is a must to hide the *.auth0.com domain from your customers.
+1. Click the Universal Login option to customize the login page.
+1. Click on the Advanced Options button at the bottom of the page.
+1. On the Settings tab under Universal Login Experience ensure "New" is selected; this is necessary for password-less authentication with passkeys.
+1. Click on the Custom Text page the text for the login page can be changed; note that language selection is a drop-down list at the upper left. Customize this if you choose.
+1. Click the Branding navigation and Universal Login again to customize the login page.
+1. Click the Customization Options button in the middle of the page.
+1. In the Styles list at the left click on the Page Background at the end.
+1. In the page layout option at the right change the dialog position to the right (third button).
+1. Set the background color to #1C2242.
+1. Set the Logo URL to https://nextstepitt.github.io/auth0-pyrates/assets/images/pyrate-sunset.jpg.
+1. Save the changes.
+1. Click the Try button at the upper right to preview the changes.
+1. Make any other changes to the font, font size, and style if you choose.
 
-#### 1.3 - Launch and check the applications
-1. Open a new integrated terminal window in the project folder and launch the Treasure application with *npm run start-treasure*.
-1. In the browser, click the *Profile* link to view the user information.
-If you are not currently signed on you will have to authenticate.
-1. Click the *Treasure* link; notice this takes you to the second application at the other URL.
-You will not have to authenticate again for this application, since the IdP already knows who you are!
-1. FYI: The sign out link for pyrates and treasure will only sign the user out of the IdP for the individual application,
-back-channel logout (part two) is required for the links to work across the applications.
+#### 1.3 - Test the applications
+1. From the Pyrates application integration settings update the ./src/pyrates/.env file with the ISSUER_URL (https://{domain}), CLIENT_ID, and CLIENT_SECRET. 
+1. From the Treasure application integration settings update the ./src/treasure/.env file with the ISSUER_URL (https://{domain}), CLIENT_ID, and CLIENT_SECRET.
+1. Open the "Lab_03 - Customization" folder in a terminal window, and execute *npm run start-pyrates*.
+1. Open the "Lab 03 - Customization" folder in a second terminal window, and execute *npm run start-treasure*.
+1. Open a browser and go to http://localhost:3000.
+1. Make sure you are signed out and see the Sign-On menu link.
+1. Click on the Sign-On menu link, and check the login screen to make sure it matches your changes.
+Do not sign on.
+1. Open http://localhost:3001 in the browser.
+1. The login page should have opened because you must be authenticated to access the Treasure application.
+1. Ensure that the login page looks the same as it did for the Pyrates application.
+This is the point of federated authentication with and identity provider; no matter what application you start with you get a consistent path.
 
-#### 1.4 - Shut it down
+#### 1.4 - Shutdown
 
-1. Terminate (ctrl-C) each application in each terminal window.
-
-### Part 2 - OIDC Back-Channel Logout
-
-Note: there are no automated tests for this part because all that would be tested is configuration, and
-it would interfere with the tests for part one if part two is not completed.
-
-#### Prerequisites
-
-1. A trial or enterprise Auth0 tenant (with back-channel logout enabled).
-    
-#### 2.1 - ngrok
-1. Sign in to ngrok.com. ; if you do not have an account click the "Sign Up" button at https://ngrok.com and register
-for a free account.
-1. Update the ngrok.yml file in the project folder with your authtoken from ngrok.
-1. Open a third terminal window in the project folder.
-1. Launch ngrok with *npm run start-ngrok*, and make a note of the two public URLs:
-one for pyrates at port 3000, and the other for treasure at port 3001.
-Leave ngrok running in this terminal window, it is OK to run even if the applications are not active.
-The URLs will change if you restart ngrok.
-
-#### 2.2 - Reconfigure the emvironments and test
-1. Update the .env files for each application replacing the local URLs with the corresponding public URLs from ngrok.
-1. In the Auth0 integrations for Pyrates and Treasure add (do not replace) the allowed
-callback and logout URLs with the public URLs;
-do not forget to append /callback for the callback URLs.
-1. In the original terminal windows restart the Pyrates and Treasure applications.
-1. Manully test as in part one to make sure the applications work with the new URLs.
-
-#### 2.3 - Update the Pyrates application
-
-1. Open a fourth integrated terminal in the project folder.
-1. Use *npm install express-session* to install the Express session manager; the back-channel logout requires a session on the server.
-1. Use *npm install memorystore* to install a memory store for the session to share with express-openid-connect.
-1. In ./src/pyrates/homeController.js import the session and the memorystore:
-    ```js
-    import session from 'express-session'
-    import initMemoryStore from 'memorystore'
-    ```
-1. After the comment about the session following the assignment of the view engine create a new session store
-instance.
-This looks funky, because the import of the memory store is actually a function that needs to be
-passed the session, and it returns a constructor to make the new session store:
-    ```js
-    const sessionStore = new (initMemoryStore(session))({ checkPeriod: 86400000 })
-    ```
-1. Now we can add a variable with the middleware for the session manager, and add it to Express:
-    ```js
-    const sessionMiddleware = session({
-        secret: secret,
-        resave: true,
-        saveUninitialized: true,
-        store: sessionStore
-    })
-
-    app.use(sessionMiddleware)
-    ```
-1. Finally tweak the configuration for the authentication middleware to enable back-channel logout by adding:
-    ```js
-    backchannelLogout: { store: sessionStore }
-    ```
-1. Save the file.
-
-#### 2.4 - Update the Treasure application
-1. Repeat all of the steps to update the Pyrates application in step three for the Treasure application.
-1. One additional configuration: add the routes attribute to the authentication configuration to send
-the user back to Pyrates when they sign out of Treasure:
-    ```js
-    routes: {
-        postLogoutRedirect: pyratesUrl
-    },
-    ```
-1. Save the file.
-
-#### 2.5 - Update the application integrations
-1. In the Auth0 application integration for Pyrates, on the *Settings* tab, locate the section for
-*OpenID Cconnect Back-Channel Logout*:
-
-    ![backchannel](./.assets/backchannel.png)
-1. Set the URI to the public URL for Pyrates with /backchannel-logout appended.
-1. Pick "All supported initiators".
-1. Save the configuration.
-1. Repeat these steps for the Treasure application, subsitituing the public Treasure URL.
-
-#### 2.6 - Test the application.
-
-1. The Nodemon utility should have restarted both Pyrates and Treasure as we save the controller code;
-if it did not or you are not sure, restart both applications.
-1. Visit the Pyrates application at the public URL.
-1. Click on the profile page and sign on.
-1. Click the Treasure link and make sure you land on that application.
-1. Click the sign out link at the Treasure application.
-Make sure you return to Pyrates, and are no longer logged in!
-
-#### 2.7
-
-1. Shut down (ctrl-C) both applications and ngrok in the first three terminal windows.
+1. Shut down (ctrl-C) both applications the two three terminal windows.
 1. Close all of the terminal windows.
 
 ## License

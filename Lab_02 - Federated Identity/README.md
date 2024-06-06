@@ -163,7 +163,7 @@ if it did not or you are not sure, restart both applications.
 1. Click the sign out link at the Treasure application.
 Make sure you return to Pyrates, and are no longer logged in!
 
-#### 2.7
+#### 2.7 - Shutdown
 
 1. Shut down (ctrl-C) both applications and ngrok in the first three terminal windows.
 1. Close all of the terminal windows.
