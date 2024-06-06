@@ -87,13 +87,6 @@ p.welcome {
     font-size: 16pt;
 }
 
-span.sub-banner {
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    font-size: 36pt;
-    font-weight: bold;
-    color: lightgrey;
-}
-
 div.footer {
     margin: 10px 0 10px 0;
     padding: 0;
