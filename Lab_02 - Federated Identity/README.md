@@ -1,9 +1,6 @@
 ![Banner Light](./.assets/nsbanner-light.png#gh-light-mode-only)
 ![banner Dark](./.assets/nsbanner-dark.png#gh-dark-mode-only)
 
-![Jolly Roger](https://github.com/jmussman/pirates/blob/master/pirates/src/assets/images/jolly-roger-black-square-100.png)
-'''''''''""""""''''''""""""
-
 # Customer Identity with OAuth2 and OIDC<br>Lab 02 - Federated Identity
 
 ## Overview
