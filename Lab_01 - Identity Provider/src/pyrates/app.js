@@ -1,5 +1,5 @@
 // app.js
-// Copyright © 2024 NextStep IT Training. All rights reserved.
+// Copyright © 2024 Joel A Mussman and NextStep IT Training powered by Smallrock. All rights reserved.
 //
 
 import { config as dotenvConfig } from 'dotenv'
