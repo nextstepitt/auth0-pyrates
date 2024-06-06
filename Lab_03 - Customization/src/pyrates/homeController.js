@@ -6,11 +6,13 @@ import express from 'express'
 import cache from 'express-cache-ctrl'
 import expressOpenIdConnect from 'express-openid-connect'
 const { auth, requiresAuth } = expressOpenIdConnect
+import session from 'express-session'
+import initMemoryStore from 'memorystore'
 import path from 'path'
 
 let appServer = null
 
-const homeController = (issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, pyratesUrl) => {
+const homeController = (issuerBaseUrl, clientId, clientSecret, secret, applicationPort, baseUrl, treasureUrl) => {
 
     const app = express()
     const iconPath = path.join(import.meta.dirname, 'assets/images/favicon.ico')
@@ -22,6 +24,16 @@ const homeController = (issuerBaseUrl, clientId, clientSecret, secret, applicati
     // Auth0 back-channel logout support depends on the session store. Note: memoryStore exports a function
     // that needs to be called with the express-session export to return a ctor to create the session store!
 
+    const sessionStore = new (initMemoryStore(session))({ checkPeriod: 86400000 })
+
+    const sessionMiddleware = session({
+        secret: secret,
+        resave: true,
+        saveUninitialized: true,
+        store: sessionStore
+    })
+
+    app.use(sessionMiddleware)
 
     // Configure the express-openid-connect SDK authentication middleware object. SSUER_BASE_URL, BASE_URL, CLIENT_ID,
     // CLIENT_SECRET, and SECRET will picked up automatically from the environment, but good software design prinsiples 
@@ -34,6 +46,7 @@ const homeController = (issuerBaseUrl, clientId, clientSecret, secret, applicati
             scope: 'openid profile email'
         },
         authRequired: false,
+        backchannelLogout: { store: sessionStore },
         baseURL: baseUrl,
         clientID: clientId,
         clientSecret: clientSecret,
@@ -57,27 +70,26 @@ const homeController = (issuerBaseUrl, clientId, clientSecret, secret, applicati
 
     // Public landing page.
 
-    app.get([ '/', '/index', '/index.html' ], requiresAuth(), cache.disable(), (request, response, next) => {
-
-        const treasure = [
-
-            { _id: 'acdcd7f6-10f1-4030-a5f8-73da8000bceb', date: '1695', amount: 600000, prize: 'Ganj-i-Sawai', ship: 'Fancy', captain: 'Long Ben' },
-            { _id: '35059dc7-5d89-44b5-b191-6e31820ac6e3', date: '1693', amount: 180000, prize: 'Unknown dhow', ship: 'Amity', captain: 'The Rhode Island Pirate' },
-            { _id: '63baab34-263f-4424-bec2-6ead385e69f9', date: '1723', amount: 15000, prize: 'Nostra Signiora de Victoria', ship: 'Squirrel', captain: 'Ned Low' },
-            { _id: '0bc78240-5110-4191-8448-bf1769da191b', date: '1721', amount: 2700, prize: 'Unknown slaver', ship: 'Unknown brigatine', captain: 'Charles Vane' },
-            { _id: '09dc6d7b-fad2-449d-9130-384477138753', date: '1723', amount: 150, prize: 'Fortune', ship: 'Fancy', captain: 'Ned Low' },
-        ];
-
-        response.render('pages/index', { isAuthenticated: request.oidc.isAuthenticated(), avatar: request.oidc.user?.picture, returnTo: pyratesUrl, treasure: treasure })
+    app.get([ '/', '/index', '/index.html' ], requiresAuth(() => false), cache.disable(), (request, response, next) => {
+        
+        response.render('pages/index', { isAuthenticated: request.oidc.isAuthenticated(), avatar: request.oidc.user?.picture })
     })
+
 
     // /logout is registered and handled by the express-openid-connect middleware.
 
+    // The profile page is built into the portal.
+
+    app.get('/profile', requiresAuth(), cache.disable(), (request, response, next) => {
+
+        response.render('pages/profile', { isAuthenticated: request.oidc.isAuthenticated(), avatar: request.oidc.user?.picture, idToken: request.oidc.idToken, rawClaims: JSON.stringify(request.oidc.user, null, 4) })
+    })
+
     // Treasure (separate application, currently not implemented).
 
-    app.get('/pyrates', cache.disable(), (request, response, next) => {
+    app.get('/treasure', requiresAuth(), cache.disable(), (request, response, next) => {
 
-        response.redirect(pyratesUrl)
+        response.redirect(treasureUrl)
     })
 
     appServer = app.listen(applicationPort)

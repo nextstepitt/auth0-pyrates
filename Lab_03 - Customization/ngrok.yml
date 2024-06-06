@@ -1,0 +1,9 @@
+version: "2"
+authtoken: 1jc9yMD8LVahl3eI99lNOwvyB7t_5aPmzTHB3oQZY7cgpLQ7x
+tunnels:
+  pyrates:
+    proto: http
+    addr: 3000
+  treasure:
+    proto: http
+    addr: 3001

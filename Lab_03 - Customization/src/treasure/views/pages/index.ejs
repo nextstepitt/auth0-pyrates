@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- index.ejs
+    Copyright © 2024 Joel A Mussman and NextStep IT Training powered by Smallrock. All rights reserved.
+
+-->
+
+<html>
+<head>
+    <%- include('../components/head'); %>
+</head>
+<body>
+        <%- include('../components/header'); %>
+
+        <div class="main">
+            <nav>
+                <%- include('../components/navigation'); %>
+            </nav>
+
+            <div class="content">
+                <table class="treasure">
+                    <thead>
+                        <tr>
+                            <th class="title" colspan="5">Treasure Leader Board</th>
+                        </tr>
+                        <tr>
+                            <th>Date</th>
+                            <th>Amount ($)</th>
+                            <th>Prize</th>
+                            <th>Ship</th>
+                            <th>Captain</th>
+                        </tr>    
+                    </thead>
+                    <tbody>
+                        <% treasure.forEach((entry) => { %>
+                        <tr>
+                            <td><%= entry.date %></td>
+                            <td><%= entry.amount %></td>
+                            <td><%= entry.prize %></td>
+                            <td><%= entry.ship %></td>
+                            <td><%= entry.captain %></td>
+                        </tr>
+                        <% }) %>       
+                    </tbody>
+                </table>
+            </div>
+        </div>    
+
+        <%- include('../components/footer'); %>
+</body>
+</html>

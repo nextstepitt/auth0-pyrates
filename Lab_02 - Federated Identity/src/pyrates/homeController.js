@@ -6,8 +6,6 @@ import express from 'express'
 import cache from 'express-cache-ctrl'
 import expressOpenIdConnect from 'express-openid-connect'
 const { auth, requiresAuth } = expressOpenIdConnect
-import session from 'express-session'
-import initMemoryStore from 'memorystore'
 import path from 'path'
 
 let appServer = null
@@ -21,19 +19,9 @@ const homeController = (issuerBaseUrl, clientId, clientSecret, secret, applicati
 
     app.set('view engine', 'ejs')
 
-    // Auth0 backchannel logout support depends on the session store. Note: memoryStore exports a function
+    // Auth0 back-channel logout support depends on the session store. Note: memoryStore exports a function
     // that needs to be called with the express-session export to return a ctor to create the session store!
 
-    const sessionStore = new (initMemoryStore(session))({ checkPeriod: 86400000 })
-
-    const sessionMiddleware = session({
-        secret: secret,
-        resave: true,
-        saveUninitialized: true,
-        store: sessionStore
-    })
-
-    app.use(sessionMiddleware)
 
     // Configure the express-openid-connect SDK authentication middleware object. SSUER_BASE_URL, BASE_URL, CLIENT_ID,
     // CLIENT_SECRET, and SECRET will picked up automatically from the environment, but good software design prinsiples 
@@ -46,7 +34,6 @@ const homeController = (issuerBaseUrl, clientId, clientSecret, secret, applicati
             scope: 'openid profile email'
         },
         authRequired: false,
-        backchannelLogout: { store: sessionStore },
         baseURL: baseUrl,
         clientID: clientId,
         clientSecret: clientSecret,
