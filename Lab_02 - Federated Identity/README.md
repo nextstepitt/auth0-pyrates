@@ -5,7 +5,7 @@
 
 ## Overview
 
-This lab explored two areas of multiple applications sharing the same federated identity provider.
+This lab explores two areas of multiple applications sharing the same federated identity provider.
 
 In part one the second application, Treasure, is configured with the IdP.
 All that is necessary is to configure the .env file for both applications: ./src/pyrates and ./src/treasure.
@@ -18,7 +18,7 @@ for this lab that requires a free (or paid) account at https://ngrok.com.
 Also, it will only work in a trial (before it expires) or enterprise Auth0 tenant,
 because those are the only tenants that have the feature enabled.
 
-FYI: backc-channel logout uses a direct call from the IdP to an application endpoint, it does not use
+FYI: back-channel logout uses a direct call from the IdP to an application endpoint, it does not use
 a browser redirect.
 So, it only works with regular web applications, which are "confidential clients" running on a web server.
 There simply is not any way for the IdP to contact single-page or native applications to tell them the user has signed out.

@@ -5,23 +5,9 @@
 
 ## Overview
 
-This lab explored two areas of multiple applications sharing the same federated identity provider.
-
-In part one the second application, Treasure, is configured with the IdP.
-All that is necessary is to configure the .env file for both applications: ./src/pyrates and ./src/treasure.
-
-The second part explores the OIDC Back-Channel Logout to let all the applications in a group
-know that the user has signed out of the IdP.
-This part is optional.
-For the back-channel logout to work, the local sandbox must be exposed with an address on the Internet and
-for this lab that requires a free (or paid) account at https://ngrok.com.
-Also, it will only work in a trial (before it expires) or enterprise Auth0 tenant,
-because those are the only tenants that have the feature enabled.
-
-FYI: backc-channel logout uses a direct call from the IdP to an application endpoint, it does not use
-a browser redirect.
-So, it only works with regular web applications, which are "confidential clients" running on a web server.
-There simply is not any way for the IdP to contact single-page or native applications to tell them the user has signed out.
+This lab explores customization/branding of the authentication experience.
+The goal is to show how an identity provider offers a consistent authentication experience regardless
+of which application the user is landing on.
 
 ## Lab Overview
 
@@ -33,8 +19,6 @@ This hands-on lab depends on:
 
 The full instructions for this lab are provided in the course book.
 This is an overview of what is accomplished in the lab:
-
-### Part 1 - Federated Identity and Single Sign-On
 
 ### Prerequisites
 
