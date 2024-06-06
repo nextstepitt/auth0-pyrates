@@ -23,12 +23,12 @@
         "start-ngrok": "ngrok --config ngrok.yml start --all",
         "start-pyrates": "cd src/pyrates && nodemon app.js",
         "start-treasure": "cd src/treasure && nodemon app.js",
-        "test": "vitest run",
-        "test-coverage": "vitest run --coverage",
-        "test-pyrates": "vitest run --dir ./test/pyrates",
-        "test-pyrates-coverage": "vitest run --dir ./test/pyrates --coverage",
-        "test-treasure": "vitest run --dir ./test/treasure",
-        "test-treasure-coverage": "vitest run --dir ./test/treasure --coverage"
+        "test": "vitest run --no-file-parallelism",
+        "test-coverage": "vitest run --no-file-parallelism --coverage",
+        "test-pyrates": "vitest run --no-file-parallelism --dir ./test/pyrates",
+        "test-pyrates-coverage": "vitest run --no-file-parallelism --dir ./test/pyrates --coverage",
+        "test-treasure": "vitest run --no-file-parallelism --dir ./test/treasure",
+        "test-treasure-coverage": "vitest run --no-file-parallelism --dir ./test/treasure --coverage"
     },
     "type": "module"
 }
