@@ -53,7 +53,7 @@ open the folder.
 
 * [Lab_01 - Identity Provider](./Lab_01%20-%20Identity%20Provider/)
 * [Lab_02 - Federated Identity](./Lab_02%20-%20Federated%20Identity/)
-* Lab_03 - Universal Login
+* [Lab_03 - Customization](./Lab_03%20-%20Customization/)
 * Lab_04 - Identity Sources
 * Lab_05 - User Management
 * Lab_06 - API Access Management
