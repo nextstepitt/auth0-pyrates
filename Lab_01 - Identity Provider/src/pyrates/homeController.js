@@ -23,23 +23,8 @@ const homeController = (issuerBaseUrl, clientId, clientSecret, secret, applicati
     // CLIENT_SECRET, and SECRET will picked up automatically from the environment, but good software design prinsiples 
     // dictate we should not let that happen and use the injected values.
 
-    const authMiddleware = auth({
-
-        authorizationParams: {
-            response_type: 'code',
-            scope: 'openid profile email'
-        },
-        authRequired: false,
-        baseURL: baseUrl,
-        clientID: clientId,
-        clientSecret: clientSecret,
-        idpLogout: true,
-        issuerBaseURL: issuerBaseUrl,
-        secret: secret
-    })
-
-    app.use(authMiddleware)
     
+
     // Anything out of /assets is static.
 
     app.use('/assets', express.static('./assets'))
@@ -53,7 +38,7 @@ const homeController = (issuerBaseUrl, clientId, clientSecret, secret, applicati
 
     // Public landing page.
 
-    app.get([ '/', '/index', '/index.html' ], requiresAuth(() => false), cache.disable(), (request, response, next) => {
+    app.get([ '/', '/index', '/index.html' ], cache.disable(), (request, response, next) => {
         
         response.render('pages/index', { isAuthenticated: request.oidc.isAuthenticated(), avatar: request.oidc.user?.picture })
     })
@@ -62,14 +47,14 @@ const homeController = (issuerBaseUrl, clientId, clientSecret, secret, applicati
 
     // The profile page is built into the portal.
 
-    app.get('/profile', requiresAuth(), cache.disable(), (request, response, next) => {
+    app.get('/profile', cache.disable(), (request, response, next) => {
 
         response.render('pages/profile', { isAuthenticated: request.oidc.isAuthenticated(), avatar: request.oidc.user?.picture, idToken: request.oidc.idToken, rawClaims: JSON.stringify(request.oidc.user, null, 4) })
     })
 
     // Treasure (separate application, currently not implemented).
 
-    app.get('/treasure', requiresAuth(), cache.disable(), (request, response, next) => {
+    app.get('/treasure', cache.disable(), (request, response, next) => {
 
         response.redirect(treasureUrl)
     })
