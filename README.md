@@ -1,5 +1,5 @@
-![Banner Light](./.assets/nsbanner-light.png#gh-light-mode-only)
-![banner Dark](./.assets/nsbanner-dark.png#gh-dark-mode-only)
+![Banner Light](./assets/images/nsbanner-light.png#gh-light-mode-only)
+![banner Dark](./assets/images/nsbanner-dark.png#gh-dark-mode-only)
 
 # Customer Identity with OAuth2 and OIDC
 
