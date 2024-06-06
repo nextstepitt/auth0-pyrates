@@ -70,4 +70,4 @@ The project is distributed under the MIT license. You may use and modify all or 
 
 
 <hr>
-Copyright © 2024 NextStep IT Training powered by Smallrock. All rights reserved.
+Copyright © 2024 Joel A Mussman and NextStep IT Training powered by Smallrock. All rights reserved.
