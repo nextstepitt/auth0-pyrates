@@ -25,3 +25,10 @@ This file documents the steps required to move from the solution (the next lab) 
     1. Remove the imports of express-openid-session and memorystore.
     1. Remove the creation of the sessionStore, the session configuration, and adding middleware. Leave the comment for Auth0 back-channel logout support.
     1. Remove the auth configuration references to backchannelLogout from both applications, and routes from the Treasure application.
+
+## Lab 03
+
+## Lab 04
+
+1. Remove the *authtoken* from the ngrok.yml file.
+1. In ./src/pyrates/.env and ./src/treasure/.env reset the BASE_URL if it was changed, and clear the ISSUER_URL, CLIENT_ID, and CLIENT_SECRET values.

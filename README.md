@@ -54,7 +54,7 @@ open the folder.
 * [Lab_01 - Identity Provider](./Lab_01%20-%20Identity%20Provider/)
 * [Lab_02 - Federated Identity](./Lab_02%20-%20Federated%20Identity/)
 * [Lab_03 - Customization](./Lab_03%20-%20Customization/)
-* Lab_04 - Identity Sources
+* [Lab_04 - Identity Sources](./Lab_04%20-%20Identity%20Sources/)
 * Lab_05 - User Management
 * Lab_06 - API Access Management
 * Lab_07 - SPA and Native Apps
@@ -72,4 +72,4 @@ The project is distributed under the MIT license. You may use and modify all or 
 <hr>
 Copyright © 2024 Joel A Mussman and NextStep IT Training powered by Smallrock. All rights reserved.
 
-Antique Pirate Ship image by Digikhmer Photography is licensed for from Dreamscape: ID 60148066 © Digikhmer | Dreamstime.com
+Antique Pirate Ship photo by Digikhmer Photography is licensed from Dreamscape: ID 60148066 © Digikhmer | Dreamstime.com

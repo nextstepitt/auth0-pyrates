@@ -100,3 +100,5 @@ The project is distributed under the MIT license. You may use and modify all or 
 
 <hr>
 Copyright © 2024 NextStep IT Training powered by Smallrock. All rights reserved.
+
+Antique Pirate Ship photo by Digikhmer Photography is licensed from Dreamscape: ID 60148066 © Digikhmer | Dreamstime.com

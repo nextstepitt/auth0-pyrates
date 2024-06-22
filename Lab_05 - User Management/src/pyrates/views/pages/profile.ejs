@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!--profile.ejs
+    Copyright © 2024 Joel A Mussman and NextStep IT Training powered by Smallrock. All rights reserved.
+
+-->
+
+<html>
+<head>
+    <%- include('../components/head'); %>
+</head>
+<body>
+        <%- include('../components/header'); %>
+
+        <div class="main">
+            <nav>
+                <%- include('../components/navigation'); %>
+            </nav>
+
+            <div class="content">
+                <h1>Your Profile</h1>
+
+                <h2>ID Token</h2>
+<pre>
+<%= idToken %>
+</pre>
+
+                <h2>JSON Claims</h2>
+<pre>
+<%= rawClaims %>
+</pre>
+            </div>
+        </div>    
+
+        <%- include('../components/footer'); %>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!-- index.ejs
+    Copyright © 2024 Joel A Mussman and NextStep IT Training powered by Smallrock. All rights reserved.
+
+-->
+
+<html>
+<head>
+    <%- include('../components/head'); %>
+</head>
+<body>
+        <%- include('../components/header'); %>
+
+        <div class="main">
+            <nav>
+                <%- include('../components/navigation'); %>
+            </nav>
+
+            <div class="content">
+                <table class="pyrates">
+                    <thead>
+                        <tr>
+                            <th class="title" colspan="6">Pyrate Identity</th>
+                        </tr>
+                        <tr>
+                            <th>_ID</th>
+                            <th>email</th>
+                            <th>Email Verified</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Ship</th>
+                            <th>Password</th>
+                        </tr>    
+                    </thead>
+                    <tbody>
+                        <% pyrates.forEach((pyrate) => { %>
+                        <tr>
+                            <td><%= pyrate._id %></td>
+                            <td><%= pyrate.email %></td>
+                            <td class="center"><%= pyrate.email_verified ? 'true' : 'false' %></td>
+                            <td><%= pyrate.firstName %></td>
+                            <td><%= pyrate.lastName %></td>
+                            <td><%= pyrate.ship %></td>
+                            <td><%= pyrate.password %></td>
+                        </tr>
+                        <% }) %>       
+                    </tbody>
+                </table>
+            </div>
+        </div>    
+
+        <%- include('../components/footer'); %>
+</body>
+</html>

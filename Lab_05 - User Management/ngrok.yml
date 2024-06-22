@@ -1,0 +1,11 @@
+version: "2"
+tunnels:
+  pyrates:
+    proto: http
+    addr: 3000
+  treasure:
+    proto: http
+    addr: 3001
+  identitydb-api:
+    proto: http
+    addr: 4000

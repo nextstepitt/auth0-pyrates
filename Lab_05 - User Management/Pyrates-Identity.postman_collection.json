@@ -1,0 +1,154 @@
+{
+	"info": {
+		"_postman_id": "21b98c10-e6ef-48f6-a17e-f05c6d7b3bcd",
+		"name": "Pyrates-Identity",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "5338690",
+		"_collection_link": "https://lunar-flare-777616.postman.co/workspace/Pyrates-Identity~5ceaa0e8-f99b-440d-84b0-af51d4af9c35/collection/5338690-21b98c10-e6ef-48f6-a17e-f05c6d7b3bcd?action=share&source=collection_link&creator=5338690"
+	},
+	"item": [
+		{
+			"name": "Create Pyrate",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{secret}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"anne.bonny@potc.live\",\n    \"firstName\": \"Anne\",\n    \"lastName\": \"Bonny\",\n    \"password\": \"P!rates17\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/pyrates",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"pyrates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Pyrate",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{secret}}"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/pyrates/{{pyrate}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"pyrates",
+						"{{pyrate}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pyrate",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{secret}}"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/pyrates/{{pyrate}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"pyrates",
+						"{{pyrate}}"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Pyrates",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{secret}}"
+					}
+				],
+				"url": {
+					"raw": "{{url}}/pyrates",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"pyrates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Pyrate",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{secret}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\": \"P!rates18\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/pyrates/{{pyrate}}",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"pyrates",
+						"{{pyrate}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

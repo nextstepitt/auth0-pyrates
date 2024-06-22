@@ -1,0 +1,40 @@
+{
+    "name": "lab-02-federated-identity",
+    "version": "1.0.0",
+    "node": ">=20.0.0",
+    "dependencies": {
+        "@fntools/password": "^1.0.4",
+        "@node-rs/bcrypt": "^1.10.4",
+        "dotenv": "^16.4.5",
+        "ejs": "^3.1.10",
+        "express": "^4.19.2",
+        "express-cache-ctrl": "^1.1.0",
+        "express-openid-connect": "^2.17.1",
+        "express-session": "^1.18.0",
+        "memorystore": "^1.6.7",
+        "uuid": "^9.0.1"
+    },
+    "devDependencies": {
+        "@vitest/coverage-v8": "^1.6.0",
+        "ejs-lint": "^2.0.0",
+        "ngrok": "^5.0.0-beta.2",
+        "nodemon": "^3.1.1",
+        "puppeteer": "^22.10.0",
+        "vitest": "^1.6.0"
+    },
+    "scripts": {
+        "start-identitydb-api": "cd src/identitydb-api && nodemon app.js",
+        "start-ngrok": "ngrok --config ngrok.yml start --all",
+        "start-pyrates": "cd src/pyrates && nodemon app.js",
+        "start-treasure": "cd src/treasure && nodemon app.js",
+        "test": "vitest run --no-file-parallelism",
+        "test-coverage": "vitest run --no-file-parallelism --coverage",
+        "test-identitydb-api": "vitest run --no-file-parallelism --dir ./test/identitydb-api",
+        "test-identitydb-api-coverage": "vitest run --no-file-parallelism --dir ./test/identitydb-api --coverage",
+        "test-pyrates": "vitest run --no-file-parallelism --dir ./test/pyrates",
+        "test-pyrates-coverage": "vitest run --no-file-parallelism --dir ./test/pyrates --coverage",
+        "test-treasure": "vitest run --no-file-parallelism --dir ./test/treasure",
+        "test-treasure-coverage": "vitest run --no-file-parallelism --dir ./test/treasure --coverage"
+    },
+    "type": "module"
+}
