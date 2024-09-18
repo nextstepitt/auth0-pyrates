@@ -1,11 +1,12 @@
 version: "2"
 tunnels:
-  pyrates:
-    proto: http
-    addr: 3000
-  treasure:
-    proto: http
-    addr: 3001
-  identitydb-api:
-    proto: http
-    addr: 4000
+    pyrates:
+        proto: http
+        addr: 3000
+    treasure:
+        proto: http
+        addr: 3001
+    identitydb-api:
+        proto: http
+        addr: 4000
+authtoken: 1jc9yMD8LVahl3eI99lNOwvyB7t_5aPmzTHB3oQZY7cgpLQ7x

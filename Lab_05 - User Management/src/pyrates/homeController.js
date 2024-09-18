@@ -75,7 +75,6 @@ const homeController = (issuerBaseUrl, clientId, clientSecret, secret, applicati
         response.render('pages/index', { isAuthenticated: request.oidc.isAuthenticated(), avatar: request.oidc.user?.picture })
     })
 
-
     // /logout is registered and handled by the express-openid-connect middleware.
 
     // The profile page is built into the portal.
@@ -90,6 +89,18 @@ const homeController = (issuerBaseUrl, clientId, clientSecret, secret, applicati
     app.get('/treasure', requiresAuth(), cache.disable(), (request, response, next) => {
 
         response.redirect(treasureUrl)
+    })
+
+    app.get('/signup', cache.disable(), (request, response, next) => {
+
+        // response.redirect(`${issuerBaseUrl}/authorize?mode=signup`)
+        response.oidc.login({returnTo: '/', authorizationParams: { screen_hint: 'signup' }})
+    })
+
+    app.get('/elogin', cache.disable(), (request, response, next) => {
+
+        // response.redirect(`${issuerBaseUrl}/authorize?mode=signup`)
+        response.oidc.login({returnTo: '/', authorizationParams: { connection: 'email' }})
     })
 
     appServer = app.listen(applicationPort)
