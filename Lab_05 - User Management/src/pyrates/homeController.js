@@ -97,6 +97,12 @@ const homeController = (issuerBaseUrl, clientId, clientSecret, secret, applicati
         response.oidc.login({returnTo: '/', authorizationParams: { screen_hint: 'signup' }})
     })
 
+    app.get('/elogin', cache.disable(), (request, response, next) => {
+
+        // response.redirect(`${issuerBaseUrl}/authorize?mode=signup`)
+        response.oidc.login({returnTo: '/', authorizationParams: { connection: 'email' }})
+    })
+
     appServer = app.listen(applicationPort)
     console.log(`Pyrates application listening on port ${applicationPort}: visit http://localhost:${applicationPort}`)
 }
